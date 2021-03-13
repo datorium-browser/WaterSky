@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using CefSharp;
 using CefSharp.WinForms;
 
-namespace ChromiumBrowserWinForms
+namespace WaterSkyWinForms
 {
     public partial class Browser : Form
     {
