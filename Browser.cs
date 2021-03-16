@@ -95,6 +95,9 @@ namespace WaterSkyWinForms
             }            
         }
 
+        private void historyButton_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

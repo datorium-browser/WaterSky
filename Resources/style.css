@@ -1,0 +1,51 @@
+html, body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: auto;
+}
+
+
+body {
+    background-image: linear-gradient(to bottom right, rgb(59, 180, 228) , white); 
+    background-repeat:no-repeat;
+}
+      
+h1{
+    color: white;
+    text-align: center;
+}
+
+hr{
+    color: #fff;
+    background-color: #fff;
+    height: 2px;
+    border: 0px;
+}
+
+.cloud {
+    display:flex;
+    background-color:#fff;
+    flex-wrap: wrap;
+    padding:20px;
+    border-radius:30px;
+    min-width:40px;
+    max-width:100%;
+    min-height:40px;
+    margin:20px;
+    position:relative;
+    align-items:center;
+    text-align:left;
+    box-shadow:1px 1px 5px;
+    box-shadow:1px 1px 5px var(--box-shadow-color);
+    --box-shadow-color:black;
+}
+
+.cloud-icon{
+    background: url("cloud.png");
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+
+}
+
