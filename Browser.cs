@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CefSharp;
 using CefSharp.WinForms;
+using ChromiumBrowserWinForms;
 
 namespace WaterSkyWinForms
 {
@@ -16,11 +17,14 @@ namespace WaterSkyWinForms
     {
         public ChromiumWebBrowser chromeBrowser = null;
         private string homeUrl = "https://datorium.eu";
+        private bool menuIsOpen { get; set; }
+        BrowserMenu menu = new BrowserMenu();
 
         public Browser()
         {
             InitializeComponent();
             InitializeChromium();
+            InitializeMenuWindow();
         }
 
         public void InitializeChromium()
@@ -31,6 +35,14 @@ namespace WaterSkyWinForms
             // Create the first browser tab            
             BrowserTabs.TabPages.Clear();
             AddBrowserTab();
+            menuIsOpen = false;
+        }
+
+        private void InitializeMenuWindow()
+        {
+            menu.InitializeBrowserMenu();
+            menu.Height = 500;
+            menu.Width = 500;
         }
 
         private void ButtonGo_Click(object sender, EventArgs e)
@@ -42,6 +54,8 @@ namespace WaterSkyWinForms
         {
             if (e.KeyCode == Keys.Enter)
             {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
                 Navigate();
             }
         }
@@ -95,6 +109,41 @@ namespace WaterSkyWinForms
             }            
         }
 
+        private void historyButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void menuButton_Click(object sender, EventArgs e)
+        {
+            OpenMenu();
+        }
+
+        private void OpenMenu()
+        {
+            if (!menuIsOpen)
+            {
+                menu.Show();
+                menuIsOpen = false;
+            }
+            else
+            {
+                menu.Hide();
+                menuIsOpen = true;
+            }
+            menuIsOpen = !menuIsOpen;
+        }
+
+        private void Browser_LocationChanged(object sender, EventArgs e)
+        {
+            ChangeMenuLocation();
+        }
+
+        private void ChangeMenuLocation()
+        {
+            menu.Top = this.Top + 60;
+            menu.Left = this.Left + (this.Width - 605);
+        }
 
     }
 }
