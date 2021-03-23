@@ -53,7 +53,6 @@ namespace WaterSkyWinForms
             this.MinimumSize = new Size(800, 600);
             DoubleBuffered = true;
             this.CenterToScreen();
-
         }
 
         private void ChromeBrowser_AddressChanged(object sender, AddressChangedEventArgs e)
@@ -105,43 +104,62 @@ namespace WaterSkyWinForms
         private void Navigate()
         {
             string url = AddressBar.Text;
+            string google = $"https://www.google.com/search?q= {url}";
+            string duckduckgo = $"https://duckduckgo.com?q= {url}";
+            string bing = $"https://www.bing.com/search?q= {url}";
+            string yahoo = $"https://search.yahoo.com/search?p= {url}";
+            string qwant = $"https://www.qwant.com/?q= {url}";
             var selectedTabPage = (ChromiumWebBrowser)BrowserTabs.SelectedTab.Controls[0];
 
-            if (url.Contains("http://") || url.Contains("https://") || url.Contains("www.") || 
-                url.Contains(domains[0]) || url.Contains(domains[1]) || url.Contains(domains[2]) || url.Contains(domains[3]) || url.Contains(domains[4]) 
-                || url.Contains(domains[5]) || url.Contains(domains[6]) || url.Contains(domains[7]) || url.Contains(domains[8]) || url.Contains(domains[9])
-                || url.Contains(domains[10]) || url.Contains(domains[11]) || url.Contains(domains[12]) || url.Contains(domains[13]))
+
+
+            for (int i = 0; i < 14; i++)
             {
-                selectedTabPage.Load(url);
-            }
-            else
-            {
-                selectedTabPage.Load($"https://duckduckgo.com?q= {url}");
+                if (url.Contains("http://") || url.Contains("https://") || url.Contains("www.") || url.Contains(domains[i]))
+                {
+                    selectedTabPage.Load(url);
+                }
             }
 
-            if (radioButtons[0].Checked)
+            for(int i = 0; i < 14; i++)
             {
-                selectedTabPage.Load($"https://www.google.com/search?q= {url}");
+                if(radioButtons[0].Checked && !url.Contains("http://") && !url.Contains("https://") && !url.Contains("www.") && !url.Contains(domains[i]))
+                {
+                    selectedTabPage.Load(google);
+                }
             }
 
-            if (radioButtons[1].Checked)
+            for (int i = 0; i < 14; i++)
             {
-                selectedTabPage.Load($"https://duckduckgo.com?q= {url}");
+                if (radioButtons[1].Checked && !url.Contains("http://") && !url.Contains("https://") && !url.Contains("www.") && !url.Contains(domains[i]))
+                {
+                    selectedTabPage.Load(duckduckgo);
+                }
             }
 
-            if (radioButtons[2].Checked)
+            for (int i = 0; i < 14; i++)
             {
-                selectedTabPage.Load($"https://www.bing.com/search?q= {url}");
+                if (radioButtons[2].Checked && !url.Contains("http://") && !url.Contains("https://") && !url.Contains("www.") && !url.Contains(domains[i]))
+                {
+                    selectedTabPage.Load(bing);
+                }
             }
 
-            if (radioButtons[3].Checked)
+            for (int i = 0; i < 14; i++)
             {
-                selectedTabPage.Load($"https://search.yahoo.com/search?p= {url}");
+                if (radioButtons[3].Checked && !url.Contains("http://") && !url.Contains("https://") && !url.Contains("www.") && !url.Contains(domains[i]))
+                {
+
+                    selectedTabPage.Load(yahoo);
+                }
             }
 
-            if (radioButtons[4].Checked)
+            for (int i = 0; i < 14; i++)
             {
-                selectedTabPage.Load($"https://www.qwant.com/?q= {url}");
+                if (radioButtons[4].Checked && !url.Contains("http://") && !url.Contains("https://") && !url.Contains("www.") && !url.Contains(domains[i]))
+                {
+                    selectedTabPage.Load(qwant);
+                }
             }
 
         }
@@ -261,8 +279,7 @@ namespace WaterSkyWinForms
                 radioButtons.Add(radioBtn);
                 settingsTab.Controls.Add(radioBtn);
             }
-
-
+            radioButtons[1].Checked = true;
         }
 
         private void ButtonTabRemove_Click(object sender, EventArgs e)
@@ -343,7 +360,6 @@ namespace WaterSkyWinForms
             {
 
             }
-
 
         }
     }
