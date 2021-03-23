@@ -18,13 +18,14 @@ namespace WaterSkyWinForms
     {
         public ChromiumWebBrowser chromeBrowser = null;
         public TabPage settingsTab = null;
+        TabPage tp = null;
+        string tabTitle;
         private string homeUrl = "https://datorium.eu";
-        //TabPage settingsTp = new TabPage();
         private bool menuIsOpen { get; set; }
         BrowserMenu menu;
         RadioButton radioBtn;
         List<RadioButton> radioButtons = new List<RadioButton>();
-        string[] domains = { ".com", ".uk", ".de", ".ru", ".org", ".net", ".in", ".ir", ".br", ".au", ".eu", ".lv", ".lt", ".ee" }; //13
+        string[] domains = { ".com", ".uk", ".de", ".ru", ".org", ".net", ".in", ".ir", ".br", ".au", ".eu", ".lv", ".lt", ".ee" }; // index: 13
 
         public Browser()
         {
@@ -52,7 +53,32 @@ namespace WaterSkyWinForms
             this.MinimumSize = new Size(800, 600);
             DoubleBuffered = true;
             this.CenterToScreen();
+
         }
+
+        private void ChromeBrowser_AddressChanged(object sender, AddressChangedEventArgs e)
+        {
+
+            this.Invoke(new MethodInvoker(() =>
+            {
+                AddressBar.Text = e.Address;
+            }));
+        }
+
+        private void ChromeBrowser_TitleChanged(object sender, TitleChangedEventArgs e)
+        {
+
+            var selectedBrowser = (ChromiumWebBrowser)sender;
+            this.Invoke(new MethodInvoker(() =>
+            {
+                selectedBrowser.Parent.Text = e.Title;
+                tabTitle = e.Title;
+
+            }));
+
+        }
+
+        
 
         private void InitializeMenuWindow()
         {
@@ -79,43 +105,43 @@ namespace WaterSkyWinForms
         private void Navigate()
         {
             string url = AddressBar.Text;
-
+            var selectedTabPage = (ChromiumWebBrowser)BrowserTabs.SelectedTab.Controls[0];
 
             if (url.Contains("http://") || url.Contains("https://") || url.Contains("www.") || 
                 url.Contains(domains[0]) || url.Contains(domains[1]) || url.Contains(domains[2]) || url.Contains(domains[3]) || url.Contains(domains[4]) 
                 || url.Contains(domains[5]) || url.Contains(domains[6]) || url.Contains(domains[7]) || url.Contains(domains[8]) || url.Contains(domains[9])
                 || url.Contains(domains[10]) || url.Contains(domains[11]) || url.Contains(domains[12]) || url.Contains(domains[13]))
             {
-                chromeBrowser.Load(url);
+                selectedTabPage.Load(url);
             }
             else
             {
-                chromeBrowser.Load($"https://duckduckgo.com?q= {url}");
+                selectedTabPage.Load($"https://duckduckgo.com?q= {url}");
             }
 
             if (radioButtons[0].Checked)
             {
-                chromeBrowser.Load($"https://www.google.com/search?q= {url}");
+                selectedTabPage.Load($"https://www.google.com/search?q= {url}");
             }
 
             if (radioButtons[1].Checked)
             {
-                chromeBrowser.Load($"https://duckduckgo.com?q= {url}");
+                selectedTabPage.Load($"https://duckduckgo.com?q= {url}");
             }
 
             if (radioButtons[2].Checked)
             {
-                chromeBrowser.Load($"https://www.bing.com/search?q= {url}");
+                selectedTabPage.Load($"https://www.bing.com/search?q= {url}");
             }
 
             if (radioButtons[3].Checked)
             {
-                chromeBrowser.Load($"https://search.yahoo.com/search?p= {url}");
+                selectedTabPage.Load($"https://search.yahoo.com/search?p= {url}");
             }
 
             if (radioButtons[4].Checked)
             {
-                chromeBrowser.Load($"https://www.qwant.com/?q= {url}");
+                selectedTabPage.Load($"https://www.qwant.com/?q= {url}");
             }
 
         }
@@ -127,14 +153,15 @@ namespace WaterSkyWinForms
 
         public void AddBrowserTab()
         {
-            var tp = new TabPage();
-            tp.Text = "Tab";
+            tp = new TabPage();
+            tp.Text = "New Tab";
             BrowserTabs.TabPages.Add(tp);
             var browser = new ChromiumWebBrowser(homeUrl);
             tp.Controls.Add(browser);
             browser.Dock = DockStyle.Fill;
-            
             chromeBrowser = browser;
+            chromeBrowser.TitleChanged += ChromeBrowser_TitleChanged;
+            chromeBrowser.AddressChanged += ChromeBrowser_AddressChanged;
             BrowserTabs.SelectTab(tp);
 
         }
@@ -238,12 +265,6 @@ namespace WaterSkyWinForms
 
         }
 
-
-        private void BrowserTabs_Selected(object sender, TabControlEventArgs e)
-        {
-            //chromeBrowser = (ChromiumWebBrowser)BrowserTabs.SelectedTab.Controls[0];
-        }
-
         private void ButtonTabRemove_Click(object sender, EventArgs e)
         {
             var tp = BrowserTabs.TabPages[BrowserTabs.TabPages.Count - 1];
@@ -305,6 +326,18 @@ namespace WaterSkyWinForms
         private void toolStripButtonReload_Click(object sender, EventArgs e)
         {
             chromeBrowser.Reload();
+        }
+
+        private void BrowserTabs_Click(object sender, EventArgs e)
+        {
+
+                var selectedBrowser = (ChromiumWebBrowser)BrowserTabs.SelectedTab.Controls[0];
+
+                this.Invoke(new MethodInvoker(() =>
+                {
+                    AddressBar.Text = selectedBrowser.Address;
+                }));
+
         }
     }
 }

@@ -30,6 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Browser));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonBack = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonForward = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonReload = new System.Windows.Forms.ToolStripButton();
             this.ButtonGo = new System.Windows.Forms.ToolStripButton();
             this.AddressBar = new System.Windows.Forms.ToolStripTextBox();
             this.ButtonAddTab = new System.Windows.Forms.ToolStripButton();
@@ -39,9 +42,6 @@
             this.BrowserTabs = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.toolStripButtonBack = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonForward = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonReload = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.BrowserTabs.SuspendLayout();
             this.SuspendLayout();
@@ -64,6 +64,36 @@
             this.toolStrip1.Size = new System.Drawing.Size(831, 39);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripButtonBack
+            // 
+            this.toolStripButtonBack.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonBack.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonBack.Image")));
+            this.toolStripButtonBack.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonBack.Name = "toolStripButtonBack";
+            this.toolStripButtonBack.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButtonBack.Text = "Back";
+            this.toolStripButtonBack.Click += new System.EventHandler(this.toolStripButtonBack_Click);
+            // 
+            // toolStripButtonForward
+            // 
+            this.toolStripButtonForward.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonForward.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonForward.Image")));
+            this.toolStripButtonForward.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonForward.Name = "toolStripButtonForward";
+            this.toolStripButtonForward.Size = new System.Drawing.Size(54, 36);
+            this.toolStripButtonForward.Text = "Forward";
+            this.toolStripButtonForward.Click += new System.EventHandler(this.toolStripButtonForward_Click);
+            // 
+            // toolStripButtonReload
+            // 
+            this.toolStripButtonReload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonReload.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonReload.Image")));
+            this.toolStripButtonReload.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonReload.Name = "toolStripButtonReload";
+            this.toolStripButtonReload.Size = new System.Drawing.Size(47, 36);
+            this.toolStripButtonReload.Text = "Reload";
+            this.toolStripButtonReload.Click += new System.EventHandler(this.toolStripButtonReload_Click);
             // 
             // ButtonGo
             // 
@@ -136,7 +166,7 @@
             this.BrowserTabs.SelectedIndex = 0;
             this.BrowserTabs.Size = new System.Drawing.Size(831, 507);
             this.BrowserTabs.TabIndex = 1;
-            this.BrowserTabs.Selected += new System.Windows.Forms.TabControlEventHandler(this.BrowserTabs_Selected);
+            this.BrowserTabs.Click += new System.EventHandler(this.BrowserTabs_Click);
             // 
             // tabPage1
             // 
@@ -159,36 +189,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // toolStripButtonBack
-            // 
-            this.toolStripButtonBack.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonBack.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonBack.Image")));
-            this.toolStripButtonBack.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonBack.Name = "toolStripButtonBack";
-            this.toolStripButtonBack.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButtonBack.Text = "Back";
-            this.toolStripButtonBack.Click += new System.EventHandler(this.toolStripButtonBack_Click);
-            // 
-            // toolStripButtonForward
-            // 
-            this.toolStripButtonForward.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonForward.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonForward.Image")));
-            this.toolStripButtonForward.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonForward.Name = "toolStripButtonForward";
-            this.toolStripButtonForward.Size = new System.Drawing.Size(54, 36);
-            this.toolStripButtonForward.Text = "Forward";
-            this.toolStripButtonForward.Click += new System.EventHandler(this.toolStripButtonForward_Click);
-            // 
-            // toolStripButtonReload
-            // 
-            this.toolStripButtonReload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonReload.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonReload.Image")));
-            this.toolStripButtonReload.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonReload.Name = "toolStripButtonReload";
-            this.toolStripButtonReload.Size = new System.Drawing.Size(47, 36);
-            this.toolStripButtonReload.Text = "Reload";
-            this.toolStripButtonReload.Click += new System.EventHandler(this.toolStripButtonReload_Click);
             // 
             // Browser
             // 
