@@ -19,22 +19,25 @@ namespace WaterSkyWinForms
         public ChromiumWebBrowser chromeBrowser = null;
         public TabPage settingsTab = null;
         TabPage tp = null;
-        string tabTitle;
         private string homeUrl = "https://datorium.eu";
         private bool menuIsOpen { get; set; }
         BrowserMenu menu;
         RadioButton radioBtn;
+        DownloadHandler downloadHandler = new DownloadHandler();
         List<RadioButton> radioButtons = new List<RadioButton>();
+
         string[] domains = { ".com", ".uk", ".de", ".ru", ".org", ".net", ".in", ".ir", ".br", ".au", ".eu", ".lv", ".lt", ".ee" }; // index: 13
 
         public Browser()
         {
             BrowserMenu menu2 = new BrowserMenu(this);
+
             menu = menu2;
             InitializeComponent();
             InitializeChromium();
             InitializeMenuWindow();
             InitializeBrowserSettings();
+            InitializeHandlers();
         }
 
         public void InitializeChromium()
@@ -55,6 +58,11 @@ namespace WaterSkyWinForms
             this.CenterToScreen();
         }
 
+        private void InitializeHandlers()
+        {
+            chromeBrowser.DownloadHandler = downloadHandler;
+        }
+
         private void ChromeBrowser_AddressChanged(object sender, AddressChangedEventArgs e)
         {
 
@@ -71,13 +79,9 @@ namespace WaterSkyWinForms
             this.Invoke(new MethodInvoker(() =>
             {
                 selectedBrowser.Parent.Text = e.Title;
-                tabTitle = e.Title;
-
             }));
 
-        }
-
-        
+        } 
 
         private void InitializeMenuWindow()
         {
@@ -110,8 +114,6 @@ namespace WaterSkyWinForms
             string yahoo = $"https://search.yahoo.com/search?p= {url}";
             string qwant = $"https://www.qwant.com/?q= {url}";
             var selectedTabPage = (ChromiumWebBrowser)BrowserTabs.SelectedTab.Controls[0];
-
-
 
             for (int i = 0; i < 14; i++)
             {
