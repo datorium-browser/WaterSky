@@ -330,13 +330,20 @@ namespace WaterSkyWinForms
 
         private void BrowserTabs_Click(object sender, EventArgs e)
         {
-
+            try
+            {
                 var selectedBrowser = (ChromiumWebBrowser)BrowserTabs.SelectedTab.Controls[0];
 
                 this.Invoke(new MethodInvoker(() =>
                 {
                     AddressBar.Text = selectedBrowser.Address;
                 }));
+            }
+            catch
+            {
+
+            }
+
 
         }
     }
