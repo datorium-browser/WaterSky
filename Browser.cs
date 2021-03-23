@@ -82,7 +82,7 @@ namespace WaterSkyWinForms
         private void AddBrowserTab()
         {
             var tp = new TabPage();
-            tp.Text = "Tab";
+            tp.Text = "Skytab";
             BrowserTabs.TabPages.Add(tp);
             var browser = new ChromiumWebBrowser(homeUrl);
             tp.Controls.Add(browser);
@@ -144,6 +144,5 @@ namespace WaterSkyWinForms
             menu.Top = this.Top + 60;
             menu.Left = this.Left + (this.Width - 605);
         }
-
     }
 }
