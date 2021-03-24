@@ -11,13 +11,12 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>ChromiumBrowserWinForms</RootNamespace>
     <AssemblyName>ChromiumBrowserWinForms</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -61,12 +60,6 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>ws_logo_pink.ico</ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup>
-    <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CefSharp, Version=87.1.132.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
@@ -137,14 +130,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\30-300079_circle-clipart-vector-black-button-png-transparent-png.png" />
-    <None Include="Resources\30-300079_circle-clipart-vector-black-button-png-transparent-png1.png" />
     <Content Include="Resources\cloud.png" />
-    <None Include="Resources\Go_Button.bmp" />
-    <None Include="Resources\Go_Button.png" />
     <Content Include="Resources\index.html" />
-    <None Include="Resources\tab-icon-png-20.png" />
-    <Content Include="ws_logo_pink.ico" />
     <None Include="Resources\Menu_Shape.png" />
     <Content Include="Resources\style.css" />
   </ItemGroup>
