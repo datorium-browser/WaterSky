@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CefSharp;
+using CefSharp.WinForms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,15 +9,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WaterSkyWinForms;
 
 namespace ChromiumBrowserWinForms
 {
     public partial class BrowserMenu : Form
     {
-        public BrowserMenu()
+        Browser mainBrowser = null;
+        public BrowserMenu(Browser tc)
         {
             InitializeComponent();
             InitializeBrowserMenu();
+            this.mainBrowser = tc;
         }
 
         public void InitializeBrowserMenu()
@@ -28,6 +33,13 @@ namespace ChromiumBrowserWinForms
             this.BackColor = Color.FromArgb(0, 168, 242);
             this.BackgroundImage = Properties.Resources.Menu_Shape;
         }
+
+
+        private void buttonSettings_Click(object sender, EventArgs e)
+        {
+            mainBrowser.OpenBrowserSettings();
+        }
+
 
     }
 }
