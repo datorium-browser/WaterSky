@@ -207,6 +207,7 @@
             this.ClientSize = new System.Drawing.Size(831, 546);
             this.Controls.Add(this.BrowserTabs);
             this.Controls.Add(this.toolStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Browser";
             this.Text = "WaterSky";

@@ -61,6 +61,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ws_logo_pink.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CefSharp, Version=87.1.132.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
       <HintPath>packages\CefSharp.Common.87.1.132\lib\net452\CefSharp.dll</HintPath>
@@ -132,6 +135,7 @@
   <ItemGroup>
     <Content Include="Resources\cloud.png" />
     <Content Include="Resources\index.html" />
+    <Content Include="ws_logo_pink.ico" />
     <None Include="Resources\Menu_Shape.png" />
     <Content Include="Resources\style.css" />
   </ItemGroup>
