@@ -49,6 +49,8 @@ namespace WaterSkyWinForms
                 Cef.Initialize(settings);
             }
 
+
+
             // Create the first browser tab            
             BrowserTabs.TabPages.Clear();
             AddBrowserTab();
