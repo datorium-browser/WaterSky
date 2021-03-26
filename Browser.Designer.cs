@@ -37,8 +37,8 @@
             this.AddressBar = new System.Windows.Forms.ToolStripTextBox();
             this.ButtonAddTab = new System.Windows.Forms.ToolStripButton();
             this.ButtonTabRemove = new System.Windows.Forms.ToolStripButton();
-            this.historyButton = new System.Windows.Forms.ToolStripButton();
             this.menuButton = new System.Windows.Forms.ToolStripButton();
+            this.historyButton = new System.Windows.Forms.ToolStripButton();
             this.BrowserTabs = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -49,7 +49,7 @@
             // toolStrip1
             // 
             this.toolStrip1.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(40, 40);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonBack,
             this.toolStripButtonForward,
@@ -62,49 +62,49 @@
             this.historyButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(831, 36);
+            this.toolStrip1.Size = new System.Drawing.Size(831, 47);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // toolStripButtonBack
             // 
-            this.toolStripButtonBack.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonBack.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButtonBack.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonBack.Image")));
             this.toolStripButtonBack.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonBack.Name = "toolStripButtonBack";
-            this.toolStripButtonBack.Size = new System.Drawing.Size(36, 33);
+            this.toolStripButtonBack.Size = new System.Drawing.Size(44, 44);
             this.toolStripButtonBack.Text = "Back";
             this.toolStripButtonBack.Click += new System.EventHandler(this.toolStripButtonBack_Click);
             // 
             // toolStripButtonForward
             // 
-            this.toolStripButtonForward.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonForward.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButtonForward.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonForward.Image")));
             this.toolStripButtonForward.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonForward.Name = "toolStripButtonForward";
-            this.toolStripButtonForward.Size = new System.Drawing.Size(54, 33);
+            this.toolStripButtonForward.Size = new System.Drawing.Size(24, 33);
             this.toolStripButtonForward.Text = "Forward";
             this.toolStripButtonForward.Click += new System.EventHandler(this.toolStripButtonForward_Click);
             // 
             // toolStripButtonReload
             // 
-            this.toolStripButtonReload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonReload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButtonReload.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonReload.Image")));
             this.toolStripButtonReload.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonReload.Name = "toolStripButtonReload";
-            this.toolStripButtonReload.Size = new System.Drawing.Size(47, 33);
+            this.toolStripButtonReload.Size = new System.Drawing.Size(24, 33);
             this.toolStripButtonReload.Text = "Reload";
             this.toolStripButtonReload.Click += new System.EventHandler(this.toolStripButtonReload_Click);
             // 
             // ButtonGo
             // 
             this.ButtonGo.BackColor = System.Drawing.Color.LavenderBlush;
-            this.ButtonGo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.ButtonGo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.ButtonGo.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
             this.ButtonGo.Image = ((System.Drawing.Image)(resources.GetObject("ButtonGo.Image")));
             this.ButtonGo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ButtonGo.Name = "ButtonGo";
-            this.ButtonGo.Size = new System.Drawing.Size(36, 33);
+            this.ButtonGo.Size = new System.Drawing.Size(44, 44);
             this.ButtonGo.Text = "Go";
             this.ButtonGo.Click += new System.EventHandler(this.ButtonGo_Click);
             // 
@@ -140,29 +140,28 @@
             this.ButtonTabRemove.Text = "-";
             this.ButtonTabRemove.Click += new System.EventHandler(this.ButtonTabRemove_Click);
             // 
+            // menuButton
+            // 
+            this.menuButton.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.menuButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.menuButton.Image = ((System.Drawing.Image)(resources.GetObject("menuButton.Image")));
+            this.menuButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.menuButton.Name = "menuButton";
+            this.menuButton.Size = new System.Drawing.Size(24, 33);
+            this.menuButton.Text = "Menu";
+            this.menuButton.Click += new System.EventHandler(this.menuButton_Click);
+            // 
             // historyButton
             // 
             this.historyButton.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.historyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.historyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.historyButton.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
             this.historyButton.Image = ((System.Drawing.Image)(resources.GetObject("historyButton.Image")));
             this.historyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.historyButton.Name = "historyButton";
-            this.historyButton.Size = new System.Drawing.Size(59, 33);
+            this.historyButton.Size = new System.Drawing.Size(24, 33);
             this.historyButton.Text = "History";
             this.historyButton.Click += new System.EventHandler(this.historyButton_Click);
-            // 
-            // menuButton
-            // 
-            this.menuButton.BackColor = System.Drawing.Color.CornflowerBlue;
-            this.menuButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.menuButton.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.menuButton.Image = ((System.Drawing.Image)(resources.GetObject("menuButton.Image")));
-            this.menuButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.menuButton.Name = "menuButton";
-            this.menuButton.Size = new System.Drawing.Size(46, 33);
-            this.menuButton.Text = "Menu";
-            this.menuButton.Click += new System.EventHandler(this.menuButton_Click);
             // 
             // BrowserTabs
             // 
@@ -170,11 +169,11 @@
             this.BrowserTabs.Controls.Add(this.tabPage2);
             this.BrowserTabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BrowserTabs.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.BrowserTabs.Location = new System.Drawing.Point(0, 36);
+            this.BrowserTabs.Location = new System.Drawing.Point(0, 47);
             this.BrowserTabs.Margin = new System.Windows.Forms.Padding(2);
             this.BrowserTabs.Name = "BrowserTabs";
             this.BrowserTabs.SelectedIndex = 0;
-            this.BrowserTabs.Size = new System.Drawing.Size(831, 510);
+            this.BrowserTabs.Size = new System.Drawing.Size(831, 499);
             this.BrowserTabs.TabIndex = 1;
             this.BrowserTabs.Click += new System.EventHandler(this.BrowserTabs_Click);
             // 
@@ -184,7 +183,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage1.Size = new System.Drawing.Size(823, 484);
+            this.tabPage1.Size = new System.Drawing.Size(823, 473);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -230,11 +229,11 @@
         private System.Windows.Forms.ToolStripButton ButtonAddTab;
         private System.Windows.Forms.ToolStripButton ButtonTabRemove;
         private System.Windows.Forms.ToolStripButton historyButton;
-        private System.Windows.Forms.ToolStripButton menuButton;
         public System.Windows.Forms.TabControl BrowserTabs;
         private System.Windows.Forms.ToolStripButton toolStripButtonBack;
         private System.Windows.Forms.ToolStripButton toolStripButtonForward;
         private System.Windows.Forms.ToolStripButton toolStripButtonReload;
+        private System.Windows.Forms.ToolStripButton menuButton;
     }
 }
 

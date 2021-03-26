@@ -22,16 +22,20 @@ namespace WaterSkyWinForms
         private string homeUrl = "https://datorium.eu";
         private bool menuIsOpen { get; set; }
         BrowserMenu menu;
+        DownloadHandler downloadHandler;
         RadioButton radioBtn;
-        DownloadHandler downloadHandler = new DownloadHandler();
+
+        Label downloadsLbl = new Label();
         List<RadioButton> radioButtons = new List<RadioButton>();
+
 
         string[] domains = { ".com", ".uk", ".de", ".ru", ".org", ".net", ".in", ".ir", ".br", ".au", ".eu", ".lv", ".lt", ".ee" }; // index: 13
 
         public Browser()
         {
             BrowserMenu menu2 = new BrowserMenu(this);
-
+            DownloadHandler downloadHndlr = new DownloadHandler(this);
+            downloadHandler = downloadHndlr;
             menu = menu2;
             InitializeComponent();
             InitializeChromium();
@@ -49,15 +53,16 @@ namespace WaterSkyWinForms
                 Cef.Initialize(settings);
             }
 
-
-
             // Create the first browser tab            
             BrowserTabs.TabPages.Clear();
             AddBrowserTab();
             menuIsOpen = false;
+            BrowserTabs.SendToBack();
             this.MinimumSize = new Size(800, 600);
             DoubleBuffered = true;
+            toolStrip1.SendToBack();
             this.CenterToScreen();
+            AddDownloadsLabel();
         }
 
         private void InitializeHandlers()
@@ -76,12 +81,18 @@ namespace WaterSkyWinForms
 
         private void ChromeBrowser_TitleChanged(object sender, TitleChangedEventArgs e)
         {
-
-            var selectedBrowser = (ChromiumWebBrowser)sender;
-            this.Invoke(new MethodInvoker(() =>
+            try
             {
-                selectedBrowser.Parent.Text = e.Title;
-            }));
+                var selectedBrowser = (ChromiumWebBrowser)sender;
+                this.Invoke(new MethodInvoker(() =>
+                {
+                    selectedBrowser.Parent.Text = e.Title;
+                }));
+            }
+            catch
+            {
+
+            }
 
         } 
 
@@ -284,6 +295,29 @@ namespace WaterSkyWinForms
                 settingsTab.Controls.Add(radioBtn);
             }
             radioButtons[1].Checked = true;
+        }
+
+        private void AddDownloadsLabel() 
+        {
+            downloadsLbl.Text = "Your file is downloading, please wait...";
+            downloadsLbl.Font = new Font("Helvetica", 24);
+            downloadsLbl.AutoSize = false;
+            downloadsLbl.TextAlign = ContentAlignment.MiddleCenter;
+            downloadsLbl.Dock = DockStyle.Bottom;
+            downloadsLbl.Height = 50;
+            downloadsLbl.BackColor = Color.Turquoise;
+            downloadsLbl.ForeColor = Color.Black;
+            downloadsLbl.BringToFront();
+            this.Controls.Add(downloadsLbl);
+            downloadsLbl.Visible = false;
+        }
+
+        public void ShowDownloadsLabel()  
+        {
+            if(!downloadsLbl.Visible)
+            {
+                downloadsLbl.Visible = true;
+            }          
         }
 
         private void ButtonTabRemove_Click(object sender, EventArgs e)

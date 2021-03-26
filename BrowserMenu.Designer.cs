@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.buttonSettings = new System.Windows.Forms.Button();
+            this.buttonNewSession = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonSettings
@@ -41,11 +42,22 @@
             this.buttonSettings.UseVisualStyleBackColor = true;
             this.buttonSettings.Click += new System.EventHandler(this.buttonSettings_Click);
             // 
+            // buttonNewSession
+            // 
+            this.buttonNewSession.Location = new System.Drawing.Point(77, 253);
+            this.buttonNewSession.Name = "buttonNewSession";
+            this.buttonNewSession.Size = new System.Drawing.Size(75, 50);
+            this.buttonNewSession.TabIndex = 1;
+            this.buttonNewSession.Text = "Start new session";
+            this.buttonNewSession.UseVisualStyleBackColor = true;
+            this.buttonNewSession.Click += new System.EventHandler(this.buttonNewSession_Click);
+            // 
             // BrowserMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(484, 461);
+            this.Controls.Add(this.buttonNewSession);
             this.Controls.Add(this.buttonSettings);
             this.Name = "BrowserMenu";
             this.Text = "BrowserMenu";
@@ -57,5 +69,6 @@
         #endregion
 
         private System.Windows.Forms.Button buttonSettings;
+        private System.Windows.Forms.Button buttonNewSession;
     }
 }
