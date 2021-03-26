@@ -49,6 +49,8 @@ namespace WaterSkyWinForms
                 Cef.Initialize(settings);
             }
 
+
+
             // Create the first browser tab            
             BrowserTabs.TabPages.Clear();
             AddBrowserTab();
@@ -174,7 +176,7 @@ namespace WaterSkyWinForms
         public void AddBrowserTab()
         {
             tp = new TabPage();
-            tp.Text = "Skytab";
+            tp.Text = "New Tab";
             BrowserTabs.TabPages.Add(tp);
             var browser = new ChromiumWebBrowser(homeUrl);
             tp.Controls.Add(browser);
@@ -331,6 +333,7 @@ namespace WaterSkyWinForms
             menu.Top = this.Top + 60;
             menu.Left = this.Left + (this.Width - 605);
         }
+
         private void toolStripButtonBack_Click(object sender, EventArgs e)
         {
             chromeBrowser.Back();
@@ -363,6 +366,5 @@ namespace WaterSkyWinForms
             }
 
         }
-
     }
 }

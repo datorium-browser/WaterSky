@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Forms;
 
 namespace ChromiumBrowserWinForms
 {
@@ -18,7 +18,7 @@ namespace ChromiumBrowserWinForms
         public void OnBeforeDownload(IWebBrowser chromiumWebBrowser, IBrowser browser, DownloadItem downloadItem, IBeforeDownloadCallback callback)
         {
             OnBeforeDownloadFired?.Invoke(this, downloadItem);
-
+            
             if (!callback.IsDisposed)
             {
                 using (callback)
@@ -31,6 +31,9 @@ namespace ChromiumBrowserWinForms
         public void OnDownloadUpdated(IWebBrowser chromiumWebBrowser, IBrowser browser, DownloadItem downloadItem, IDownloadItemCallback callback)
         {
             OnDownloadUpdatedFired?.Invoke(this, downloadItem);
+
         }
+
+
     }
 }
