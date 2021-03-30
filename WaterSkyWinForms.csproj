@@ -138,12 +138,19 @@
     <Content Include="Resources\forward_logo.png" />
     <Content Include="Resources\go_logo.png" />
     <Content Include="Resources\history_logo.png" />
-    <Content Include="Resources\index.html" />
+    <Content Include="Resources\home-page\home-index.html" />
+    <Content Include="Resources\home-page\home-style.css" />
+    <Content Include="Resources\home-page\ws_homepage_logo_pink.png" />
+    <Content Include="Resources\history-page\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\menu_button.png" />
     <Content Include="Resources\reload_logo.png" />
     <Content Include="ws_logo_pink.ico" />
     <None Include="Resources\Menu_Shape.png" />
-    <Content Include="Resources\style.css" />
+    <Content Include="Resources\history-page\style.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

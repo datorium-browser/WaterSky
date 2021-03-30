@@ -4,11 +4,13 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CefSharp;
+using CefSharp.SchemeHandler;
 using CefSharp.WinForms;
 using ChromiumBrowserWinForms;
 
@@ -19,16 +21,17 @@ namespace WaterSkyWinForms
         public ChromiumWebBrowser chromeBrowser = null;
         public TabPage settingsTab = null;
         TabPage tp = null;
-        private string homeUrl = "https://datorium.eu";
+        string waterskyHome = "watersky://home/";
+        string workingDir;
+        string projectDir;
+        string resourcesDir;
+        string addressbarPlaceholder = "Enter address or search for a keyword";
         private bool menuIsOpen { get; set; }
         BrowserMenu menu;
         DownloadHandler downloadHandler;
         RadioButton radioBtn;
-
         Label downloadsLbl = new Label();
         List<RadioButton> radioButtons = new List<RadioButton>();
-
-
         string[] domains = { ".com", ".uk", ".de", ".ru", ".org", ".net", ".in", ".ir", ".br", ".au", ".eu", ".lv", ".lt", ".ee" }; // index: 13
 
         public Browser()
@@ -38,6 +41,7 @@ namespace WaterSkyWinForms
             downloadHandler = downloadHndlr;
             menu = menu2;
             InitializeComponent();
+            GetDirectory();
             InitializeChromium();
             InitializeMenuWindow();
             InitializeBrowserSettings();
@@ -50,6 +54,9 @@ namespace WaterSkyWinForms
             {
                 CefSettings settings = new CefSettings();
                 // Initialize cef with the provided settings
+
+                InitializeHomePage(settings);
+
                 Cef.Initialize(settings);
             }
 
@@ -58,11 +65,36 @@ namespace WaterSkyWinForms
             AddBrowserTab();
             menuIsOpen = false;
             BrowserTabs.SendToBack();
-            this.MinimumSize = new Size(800, 600);
+            this.MinimumSize = new Size(900, 800);
+            AddressBar.Width = 450;
             DoubleBuffered = true;
             toolStrip1.SendToBack();
             this.CenterToScreen();
             AddDownloadsLabel();
+        }
+
+        private void GetDirectory()
+        {
+            // This will get the current WORKING directory (i.e. ...\bin\Debug)
+            workingDir = Environment.CurrentDirectory;
+            // This will get the current PROJECT directory
+            projectDir = Directory.GetParent(workingDir).Parent.Parent.FullName;
+            // This will get the Resources folder directory (i.e. ...\WaterSkyBrowser\Resources)
+            resourcesDir = projectDir + @"\Resources";
+        }
+
+        private void InitializeHomePage(CefSettings settings)
+        {
+                settings.RegisterScheme(new CefCustomScheme
+                {
+                    SchemeName = "watersky",
+                    DomainName = "home",
+                    SchemeHandlerFactory = new FolderSchemeHandlerFactory(
+           rootFolder: resourcesDir + @"\home-page",
+           hostName: "home",
+           defaultPage: "home-index.html" // will default to index.html
+            )
+                });
         }
 
         private void InitializeHandlers()
@@ -75,7 +107,19 @@ namespace WaterSkyWinForms
 
             this.Invoke(new MethodInvoker(() =>
             {
+
+                var selectedTabPage = (ChromiumWebBrowser)BrowserTabs.SelectedTab.Controls[0];
                 AddressBar.Text = e.Address;
+                if(e.Address == waterskyHome || selectedTabPage.Text == "Home")
+                {
+                    AddressBar.Text = addressbarPlaceholder;
+                    AddressBar.ForeColor = Color.Gray;
+                }
+                else
+                {
+                    AddressBar.ForeColor = Color.Black;
+                }
+
             }));
         }
 
@@ -91,7 +135,7 @@ namespace WaterSkyWinForms
             }
             catch
             {
-
+                
             }
 
         } 
@@ -120,6 +164,7 @@ namespace WaterSkyWinForms
 
         private void Navigate()
         {
+            
             string url = AddressBar.Text;
             string google = $"https://www.google.com/search?q= {url}";
             string duckduckgo = $"https://duckduckgo.com?q= {url}";
@@ -127,6 +172,7 @@ namespace WaterSkyWinForms
             string yahoo = $"https://search.yahoo.com/search?p= {url}";
             string qwant = $"https://www.qwant.com/?q= {url}";
             var selectedTabPage = (ChromiumWebBrowser)BrowserTabs.SelectedTab.Controls[0];
+
 
             for (int i = 0; i < 14; i++)
             {
@@ -179,6 +225,13 @@ namespace WaterSkyWinForms
 
         }
 
+        public void LoadHomePage()
+        {
+            var selectedTabPage = (ChromiumWebBrowser)BrowserTabs.SelectedTab.Controls[0];
+            selectedTabPage.Load(waterskyHome);
+            menu.Hide();
+        }
+
         private void ButtonAddTab_Click(object sender, EventArgs e)
         {
             AddBrowserTab();
@@ -189,14 +242,13 @@ namespace WaterSkyWinForms
             tp = new TabPage();
             tp.Text = "New Tab";
             BrowserTabs.TabPages.Add(tp);
-            var browser = new ChromiumWebBrowser(homeUrl);
+            var browser = new ChromiumWebBrowser(waterskyHome);
             tp.Controls.Add(browser);
             browser.Dock = DockStyle.Fill;
             chromeBrowser = browser;
             chromeBrowser.TitleChanged += ChromeBrowser_TitleChanged;
             chromeBrowser.AddressChanged += ChromeBrowser_AddressChanged;
             BrowserTabs.SelectTab(tp);
-
         }
 
         private void InitializeBrowserSettings()
@@ -284,6 +336,7 @@ namespace WaterSkyWinForms
                 radioBtn.Name = "searchEngine" + i;
                 radioBtn.Checked = false;
                 radioBtn.Text = searchEngines[i];
+                
                 radioBtn.AutoSize = false;
                 radioBtn.Size = new Size(180, 30);
                 radioBtn.ForeColor = Color.White;
@@ -322,13 +375,14 @@ namespace WaterSkyWinForms
 
         private void ButtonTabRemove_Click(object sender, EventArgs e)
         {
-            var tp = BrowserTabs.TabPages[BrowserTabs.TabPages.Count - 1];
-            
-            if(BrowserTabs.TabPages.Count > 1)
+            var selectedTabPage = BrowserTabs.SelectedTab;
+
+            if (BrowserTabs.TabPages.Count > 1)
             {
-                BrowserTabs.TabPages.Remove(tp);
-                tp = BrowserTabs.TabPages[BrowserTabs.TabPages.Count - 1];
-                BrowserTabs.SelectTab(tp);
+                BrowserTabs.TabPages.Remove(selectedTabPage);
+                selectedTabPage = BrowserTabs.TabPages[BrowserTabs.TabPages.Count - 1];
+                BrowserTabs.SelectTab(selectedTabPage);
+                SyncAddressBarToUrl();
             }            
         }
 
@@ -383,7 +437,7 @@ namespace WaterSkyWinForms
             chromeBrowser.Reload();
         }
 
-        private void BrowserTabs_Click(object sender, EventArgs e)
+        private void SyncAddressBarToUrl()
         {
             try
             {
@@ -398,7 +452,148 @@ namespace WaterSkyWinForms
             {
 
             }
+        }
 
+        private void BrowserTabs_Click(object sender, EventArgs e)
+        {
+            SyncAddressBarToUrl();
+        }
+
+        private void Browser_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DialogResult result;
+            if(BrowserTabs.TabPages.Count > 1)
+            {
+                result = MessageBox.Show($"You are about to close {BrowserTabs.TabPages.Count} tabs. Are you sure you want to continue?","Close all tabs?", MessageBoxButtons.YesNo);
+
+                if(result == DialogResult.Yes)
+                {
+                    
+                }
+                else if(result == DialogResult.No)
+                {
+                    e.Cancel = true;
+                }
+            }
+        }
+
+        private int getHoverTabIndex(TabControl tc)
+        {
+            for (int i = 0; i < tc.TabPages.Count; i++)
+            {
+                if (tc.GetTabRect(i).Contains(tc.PointToClient(Cursor.Position)))
+                    return i;
+            }
+
+            return -1;
+        }
+
+        private void swapTabPages(TabControl tc, TabPage src, TabPage dst)
+        {
+            int index_src = tc.TabPages.IndexOf(src);
+            int index_dst = tc.TabPages.IndexOf(dst);
+            tc.TabPages[index_dst] = src;
+            tc.TabPages[index_src] = dst;
+            tc.Refresh();
+        }
+
+        private void BrowserTabs_MouseDown(object sender, MouseEventArgs e)
+        {
+            // store clicked tab
+            TabControl tc = (TabControl)sender;
+            int hover_index = this.getHoverTabIndex(tc);
+            if (hover_index >= 0) { tc.Tag = tc.TabPages[hover_index]; }
+        }
+
+        private void BrowserTabs_MouseUp(object sender, MouseEventArgs e)
+        {
+            // clear stored tab
+            TabControl tc = (TabControl)sender;
+            tc.Tag = null;
+        }
+
+        private void BrowserTabs_MouseMove(object sender, MouseEventArgs e) 
+        {
+            // mouse button down? tab was clicked?
+            TabControl tc = (TabControl)sender;
+            if ((e.Button != MouseButtons.Left) || (tc.Tag == null)) return;
+            TabPage clickedTab = (TabPage)tc.Tag;
+            int clicked_index = tc.TabPages.IndexOf(clickedTab);
+
+            // start drag n drop
+            tc.DoDragDrop(clickedTab, DragDropEffects.All);
+
+            //Syncronise url to addressbar
+            SyncAddressBarToUrl();
+        }
+
+        private void BrowserTabs_DragOver(object sender, DragEventArgs e)
+        {
+            TabControl tc = (TabControl)sender;
+
+            // a tab is draged?
+            if (e.Data.GetData(typeof(TabPage)) == null) return;
+            TabPage dragTab = (TabPage)e.Data.GetData(typeof(TabPage));
+            int dragTab_index = tc.TabPages.IndexOf(dragTab);
+
+            // hover over a tab?
+            int hoverTab_index = this.getHoverTabIndex(tc);
+            if (hoverTab_index < 0) { e.Effect = DragDropEffects.None; return; }
+            TabPage hoverTab = tc.TabPages[hoverTab_index];
+            e.Effect = DragDropEffects.Move;
+
+            // start of drag?
+            if (dragTab == hoverTab) return;
+
+            // swap dragTab & hoverTab - avoids toggeling
+            Rectangle dragTabRect = tc.GetTabRect(dragTab_index);
+            Rectangle hoverTabRect = tc.GetTabRect(hoverTab_index);
+
+            if (dragTabRect.Width < hoverTabRect.Width)
+            {
+                Point tcLocation = tc.PointToScreen(tc.Location);
+
+                if (dragTab_index < hoverTab_index)
+                {
+                    if ((e.X - tcLocation.X) > ((hoverTabRect.X + hoverTabRect.Width) - dragTabRect.Width))
+                        this.swapTabPages(tc, dragTab, hoverTab);
+                }
+                else if (dragTab_index > hoverTab_index)
+                {
+                    if ((e.X - tcLocation.X) < (hoverTabRect.X + dragTabRect.Width))
+                        this.swapTabPages(tc, dragTab, hoverTab);
+                }
+            }
+            else this.swapTabPages(tc, dragTab, hoverTab);
+
+            // select new pos of dragTab
+            tc.SelectedIndex = tc.TabPages.IndexOf(dragTab);
+
+            //Syncronise url to addressbar
+            SyncAddressBarToUrl();
+        }
+
+        private void AddressBar_Enter(object sender, EventArgs e)
+        {
+            if (AddressBar.Text == addressbarPlaceholder)
+            {
+                AddressBar.Text = null;
+                AddressBar.ForeColor = Color.Black;
+            }
+        }
+
+        private void AddressBar_Leave(object sender, EventArgs e)
+        {
+            if (AddressBar.Text.Trim() == "")
+            {
+                AddressBar.Text = addressbarPlaceholder;
+                AddressBar.ForeColor = Color.Gray;
+            }
+        }
+
+        private void Browser_Load(object sender, EventArgs e)
+        {
+            AddressBar.Text = addressbarPlaceholder;
         }
     }
 }

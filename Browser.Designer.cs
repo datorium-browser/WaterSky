@@ -82,7 +82,7 @@
             this.toolStripButtonForward.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonForward.Image")));
             this.toolStripButtonForward.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonForward.Name = "toolStripButtonForward";
-            this.toolStripButtonForward.Size = new System.Drawing.Size(24, 33);
+            this.toolStripButtonForward.Size = new System.Drawing.Size(44, 44);
             this.toolStripButtonForward.Text = "Forward";
             this.toolStripButtonForward.Click += new System.EventHandler(this.toolStripButtonForward_Click);
             // 
@@ -92,7 +92,7 @@
             this.toolStripButtonReload.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonReload.Image")));
             this.toolStripButtonReload.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonReload.Name = "toolStripButtonReload";
-            this.toolStripButtonReload.Size = new System.Drawing.Size(24, 33);
+            this.toolStripButtonReload.Size = new System.Drawing.Size(44, 44);
             this.toolStripButtonReload.Text = "Reload";
             this.toolStripButtonReload.Click += new System.EventHandler(this.toolStripButtonReload_Click);
             // 
@@ -110,10 +110,13 @@
             // 
             // AddressBar
             // 
+            this.AddressBar.AutoSize = false;
             this.AddressBar.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
             this.AddressBar.Margin = new System.Windows.Forms.Padding(0);
             this.AddressBar.Name = "AddressBar";
-            this.AddressBar.Size = new System.Drawing.Size(301, 36);
+            this.AddressBar.Size = new System.Drawing.Size(301, 47);
+            this.AddressBar.Enter += new System.EventHandler(this.AddressBar_Enter);
+            this.AddressBar.Leave += new System.EventHandler(this.AddressBar_Leave);
             this.AddressBar.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AddressBar_KeyDown);
             // 
             // ButtonAddTab
@@ -124,7 +127,7 @@
             this.ButtonAddTab.Image = ((System.Drawing.Image)(resources.GetObject("ButtonAddTab.Image")));
             this.ButtonAddTab.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ButtonAddTab.Name = "ButtonAddTab";
-            this.ButtonAddTab.Size = new System.Drawing.Size(38, 33);
+            this.ButtonAddTab.Size = new System.Drawing.Size(38, 44);
             this.ButtonAddTab.Text = "+";
             this.ButtonAddTab.Click += new System.EventHandler(this.ButtonAddTab_Click);
             // 
@@ -136,7 +139,7 @@
             this.ButtonTabRemove.Image = ((System.Drawing.Image)(resources.GetObject("ButtonTabRemove.Image")));
             this.ButtonTabRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ButtonTabRemove.Name = "ButtonTabRemove";
-            this.ButtonTabRemove.Size = new System.Drawing.Size(29, 33);
+            this.ButtonTabRemove.Size = new System.Drawing.Size(29, 44);
             this.ButtonTabRemove.Text = "-";
             this.ButtonTabRemove.Click += new System.EventHandler(this.ButtonTabRemove_Click);
             // 
@@ -147,7 +150,7 @@
             this.menuButton.Image = ((System.Drawing.Image)(resources.GetObject("menuButton.Image")));
             this.menuButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.menuButton.Name = "menuButton";
-            this.menuButton.Size = new System.Drawing.Size(24, 33);
+            this.menuButton.Size = new System.Drawing.Size(44, 44);
             this.menuButton.Text = "Menu";
             this.menuButton.Click += new System.EventHandler(this.menuButton_Click);
             // 
@@ -159,12 +162,13 @@
             this.historyButton.Image = ((System.Drawing.Image)(resources.GetObject("historyButton.Image")));
             this.historyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.historyButton.Name = "historyButton";
-            this.historyButton.Size = new System.Drawing.Size(24, 33);
+            this.historyButton.Size = new System.Drawing.Size(44, 44);
             this.historyButton.Text = "History";
             this.historyButton.Click += new System.EventHandler(this.historyButton_Click);
             // 
             // BrowserTabs
             // 
+            this.BrowserTabs.AllowDrop = true;
             this.BrowserTabs.Controls.Add(this.tabPage1);
             this.BrowserTabs.Controls.Add(this.tabPage2);
             this.BrowserTabs.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -176,6 +180,10 @@
             this.BrowserTabs.Size = new System.Drawing.Size(831, 499);
             this.BrowserTabs.TabIndex = 1;
             this.BrowserTabs.Click += new System.EventHandler(this.BrowserTabs_Click);
+            this.BrowserTabs.DragOver += new System.Windows.Forms.DragEventHandler(this.BrowserTabs_DragOver);
+            this.BrowserTabs.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BrowserTabs_MouseDown);
+            this.BrowserTabs.MouseMove += new System.Windows.Forms.MouseEventHandler(this.BrowserTabs_MouseMove);
+            this.BrowserTabs.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BrowserTabs_MouseUp);
             // 
             // tabPage1
             // 
@@ -194,7 +202,7 @@
             this.tabPage2.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage2.Size = new System.Drawing.Size(823, 484);
+            this.tabPage2.Size = new System.Drawing.Size(823, 473);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -210,6 +218,8 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Browser";
             this.Text = "WaterSky";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Browser_FormClosing);
+            this.Load += new System.EventHandler(this.Browser_Load);
             this.LocationChanged += new System.EventHandler(this.Browser_LocationChanged);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();

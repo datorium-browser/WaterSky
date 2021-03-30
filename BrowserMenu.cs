@@ -37,12 +37,26 @@ namespace ChromiumBrowserWinForms
 
         private void buttonSettings_Click(object sender, EventArgs e)
         {
-            mainBrowser.OpenBrowserSettings();
+            var settings = mainBrowser.settingsTab;
+            if (!mainBrowser.BrowserTabs.TabPages.Contains(settings))
+            {
+                mainBrowser.OpenBrowserSettings();
+            }
+            else
+            {
+                return;
+            }
+
         }
 
         private void buttonNewSession_Click(object sender, EventArgs e)
         {
             Application.Restart();
+        }
+
+        private void buttonHome_Click(object sender, EventArgs e)
+        {
+            mainBrowser.LoadHomePage();
         }
     }
 }

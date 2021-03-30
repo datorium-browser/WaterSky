@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="home-style.css">
+    <title>Home</title>
+</head>
+<body>
+    <div class="header">
+        <h1>Home</h1>
+    </div>
+
+    <div class="logo-parent">
+        <div class="logo"></div>
+    </div>
+
+    <div class="form-parent">
+                <span class="tooltiptext">NOTE: the search engine selection in the browser settings, does not work with this search bar at the moment and 
+                    will use the search provided by DuckDuckGo.
+                    We are working hard to resolve this issue.
+                    Alternatively, you can use DuckDuckGo's "bangs" feature, that will redirect your search result to your desired search engine.<br> 
+                    !g - used for Google search;<br> 
+                    !b - used for Bing search;<br> 
+                    !y - used for Yahoo search;<br> 
+                    !qw - used for Qwant search.<br> 
+                    Example: !g puppies
+                </span>        
+        <form action="https://duckduckgo.com/?" target="_self">
+            <div class="txtbox-parent">
+                <input name="q" class="txtbox" autocomplete="off" placeholder="Search here to start...">        
+                <input type="submit" value="Search" id="search-button">
+            </div>        
+        </form>        
+    </div>
+
+
+</body>
+</html>

@@ -30,6 +30,7 @@
         {
             this.buttonSettings = new System.Windows.Forms.Button();
             this.buttonNewSession = new System.Windows.Forms.Button();
+            this.buttonHome = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonSettings
@@ -52,11 +53,22 @@
             this.buttonNewSession.UseVisualStyleBackColor = true;
             this.buttonNewSession.Click += new System.EventHandler(this.buttonNewSession_Click);
             // 
+            // buttonHome
+            // 
+            this.buttonHome.Location = new System.Drawing.Point(183, 196);
+            this.buttonHome.Name = "buttonHome";
+            this.buttonHome.Size = new System.Drawing.Size(75, 23);
+            this.buttonHome.TabIndex = 2;
+            this.buttonHome.Text = "Home";
+            this.buttonHome.UseVisualStyleBackColor = true;
+            this.buttonHome.Click += new System.EventHandler(this.buttonHome_Click);
+            // 
             // BrowserMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(484, 461);
+            this.Controls.Add(this.buttonHome);
             this.Controls.Add(this.buttonNewSession);
             this.Controls.Add(this.buttonSettings);
             this.Name = "BrowserMenu";
@@ -70,5 +82,6 @@
 
         private System.Windows.Forms.Button buttonSettings;
         private System.Windows.Forms.Button buttonNewSession;
+        private System.Windows.Forms.Button buttonHome;
     }
 }
