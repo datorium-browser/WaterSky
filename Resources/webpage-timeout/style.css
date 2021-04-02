@@ -1,0 +1,47 @@
+html, body{
+    height: 100%;
+    margin: 0;  
+}
+
+body{
+    background-image: linear-gradient(to bottom right, rgb(17, 157, 218) , white);
+    background-repeat: no-repeat;
+    font-family: Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;    
+}
+
+body div{
+    width: 50%;
+    margin-left: 20px;
+    box-shadow: 1px 1px 5px #000;
+    border-radius: 40px;
+    background-color: #fff;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
+}
+
+body h1, h3{
+    color: black;
+}
+
+body .logo{
+    width: 320px;
+    height: 300px;
+    box-shadow: 1px 1px 5px #000;
+    border-radius: 40px;
+    background-image: url("cloud-icon.png");
+    background-size: 300px 300px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+div li{
+    padding-left: 30px;
+    padding-bottom: 20px;
+    list-style-position: inside;
+}

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
@@ -20,19 +21,28 @@ namespace WaterSkyWinForms
     {
         public ChromiumWebBrowser chromeBrowser = null;
         public TabPage settingsTab = null;
+        Timer downloadsTimer = new Timer();
+        Timer downloadCancelTimer = new Timer();
         TabPage tp = null;
         string waterskyHome = "watersky://home/";
+        string pageNotFound = "watersky://Page_Not_Found/";
+        string waterskyHistory = "watersky://history/";
         string workingDir;
         string projectDir;
         string resourcesDir;
         string addressbarPlaceholder = "Enter address or search for a keyword";
+        public TableLayoutPanel downloadsTableLayoutPanel;
         private bool menuIsOpen { get; set; }
         BrowserMenu menu;
         DownloadHandler downloadHandler;
         RadioButton radioBtn;
-        Label downloadsLbl = new Label();
+        Button downloadsBtn;
+       private Label downloadsLbl = new Label();
         List<RadioButton> radioButtons = new List<RadioButton>();
-        string[] domains = { ".com", ".uk", ".de", ".ru", ".org", ".net", ".in", ".ir", ".br", ".au", ".eu", ".lv", ".lt", ".ee" }; // index: 13
+        //excluded .in domain, because it intefiers with some latvian sites
+        string[] domains = { ".com", ".uk", ".de", ".ru", ".org", ".net", /*".in",*/ ".ir", ".br", ".au", ".eu", ".lv", ".lt", ".ee" }; // index: 13
+        
+
 
         public Browser()
         {
@@ -43,9 +53,12 @@ namespace WaterSkyWinForms
             InitializeComponent();
             GetDirectory();
             InitializeChromium();
+            InitializeTableLayoutPanel();
             InitializeMenuWindow();
             InitializeBrowserSettings();
             InitializeHandlers();
+            InitializeDownloadsTimer();
+            InitializeDownloadCancelTimer();
         }
 
         public void InitializeChromium()
@@ -56,7 +69,8 @@ namespace WaterSkyWinForms
                 // Initialize cef with the provided settings
 
                 InitializeHomePage(settings);
-
+                InitializePageNotFound(settings);
+                InitializeHistory(settings);
                 Cef.Initialize(settings);
             }
 
@@ -71,6 +85,7 @@ namespace WaterSkyWinForms
             toolStrip1.SendToBack();
             this.CenterToScreen();
             AddDownloadsLabel();
+            CreateDownloadsBtn();
         }
 
         private void GetDirectory()
@@ -97,9 +112,83 @@ namespace WaterSkyWinForms
                 });
         }
 
+        private void InitializePageNotFound(CefSettings settings)
+        {
+                        settings.RegisterScheme(new CefCustomScheme
+                        {
+                            SchemeName = "watersky",
+                            DomainName = "Page_Not_Found",
+                            SchemeHandlerFactory = new FolderSchemeHandlerFactory(
+            rootFolder: resourcesDir + @"\webpage-timeout",
+            hostName: "Page_Not_Found",
+            defaultPage: "index.html" // will default to index.html
+            )
+                        });
+        }
+
+        private void InitializeHistory(CefSettings settings)
+        {
+                        settings.RegisterScheme(new CefCustomScheme
+                        {
+                            SchemeName = "watersky",
+                            DomainName = "history",
+                            SchemeHandlerFactory = new FolderSchemeHandlerFactory(
+            rootFolder: resourcesDir + @"\history-page",
+            hostName: "history",
+            defaultPage: "index.html" // will default to index.html
+            )
+                        });
+        }
+
         private void InitializeHandlers()
         {
             chromeBrowser.DownloadHandler = downloadHandler;
+        }
+
+        private void InitializeTableLayoutPanel()
+        {
+            downloadsTableLayoutPanel = new TableLayoutPanel();
+            downloadsTableLayoutPanel.Dock = DockStyle.Bottom;
+            downloadsTableLayoutPanel.Height = 50;
+            downloadsTableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80F));
+            downloadsTableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            this.downloadsTableLayoutPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.None;
+            this.Controls.Add(downloadsTableLayoutPanel);
+            downloadsTableLayoutPanel.Controls.Add(downloadsLbl, 0, 0);
+            downloadsTableLayoutPanel.Controls.Add(downloadsBtn, 1, 0);
+            downloadsTableLayoutPanel.Visible = false;
+        }
+
+        private void InitializeDownloadsTimer()
+        {
+            downloadsTimer.Interval = 10;
+            downloadsTimer.Tick += DownloadsTimer_Tick;
+
+        }
+
+        private void InitializeDownloadCancelTimer()
+        {
+            downloadCancelTimer.Interval = 10;
+            downloadCancelTimer.Tick += DownloadCancelTimer_Tick;
+            downloadCancelTimer.Start();
+        }
+
+        private void DownloadCancelTimer_Tick(object sender, EventArgs e)
+        {
+            if(downloadHandler.DownloadCancelled == true)
+            {
+                downloadsTableLayoutPanel.Visible = false;
+                downloadsTimer.Stop();
+            }
+            if(downloadHandler.FileIsDownloading == true)
+            {
+                downloadsTimer.Start();
+            }
+        }
+
+        private void DownloadsTimer_Tick(object sender, EventArgs e)
+        {
+            ShowDownloadsPanel();
         }
 
         private void ChromeBrowser_AddressChanged(object sender, AddressChangedEventArgs e)
@@ -159,12 +248,12 @@ namespace WaterSkyWinForms
                 e.Handled = true;
                 e.SuppressKeyPress = true;
                 Navigate();
+                AddUrlToHistory(AddressBar.Text);
             }
         }
 
         private void Navigate()
         {
-            
             string url = AddressBar.Text;
             string google = $"https://www.google.com/search?q= {url}";
             string duckduckgo = $"https://duckduckgo.com?q= {url}";
@@ -174,15 +263,26 @@ namespace WaterSkyWinForms
             var selectedTabPage = (ChromiumWebBrowser)BrowserTabs.SelectedTab.Controls[0];
 
 
-            for (int i = 0; i < 14; i++)
+            foreach(string dom in domains)
             {
-                if (url.Contains("http://") || url.Contains("https://") || url.Contains("www.") || url.Contains(domains[i]))
+                if (!url.Contains(dom))
+                {
+                    selectedTabPage.Load(pageNotFound);
+                    continue;
+                }
+                continue;
+            }
+
+            foreach(string dom in domains)
+            {
+                if (url.Contains("www.") && url.Contains(dom))
                 {
                     selectedTabPage.Load(url);
+                    
                 }
             }
 
-            for(int i = 0; i < 14; i++)
+            for(int i = 0; i < 13; i++)
             {
                 if(radioButtons[0].Checked && !url.Contains("http://") && !url.Contains("https://") && !url.Contains("www.") && !url.Contains(domains[i]))
                 {
@@ -190,7 +290,7 @@ namespace WaterSkyWinForms
                 }
             }
 
-            for (int i = 0; i < 14; i++)
+            for (int i = 0; i < 13; i++)
             {
                 if (radioButtons[1].Checked && !url.Contains("http://") && !url.Contains("https://") && !url.Contains("www.") && !url.Contains(domains[i]))
                 {
@@ -198,7 +298,7 @@ namespace WaterSkyWinForms
                 }
             }
 
-            for (int i = 0; i < 14; i++)
+            for (int i = 0; i < 13; i++)
             {
                 if (radioButtons[2].Checked && !url.Contains("http://") && !url.Contains("https://") && !url.Contains("www.") && !url.Contains(domains[i]))
                 {
@@ -206,7 +306,7 @@ namespace WaterSkyWinForms
                 }
             }
 
-            for (int i = 0; i < 14; i++)
+            for (int i = 0; i < 13; i++)
             {
                 if (radioButtons[3].Checked && !url.Contains("http://") && !url.Contains("https://") && !url.Contains("www.") && !url.Contains(domains[i]))
                 {
@@ -215,14 +315,25 @@ namespace WaterSkyWinForms
                 }
             }
 
-            for (int i = 0; i < 14; i++)
+            for (int i = 0; i < 13; i++)
             {
                 if (radioButtons[4].Checked && !url.Contains("http://") && !url.Contains("https://") && !url.Contains("www.") && !url.Contains(domains[i]))
                 {
                     selectedTabPage.Load(qwant);
                 }
             }
+        }
 
+        private void AddUrlToHistory( string url)
+        {
+            if (AddressBar.Text.Contains(waterskyHome) || AddressBar.Text.Contains(pageNotFound) || AddressBar.Text.Contains(waterskyHistory))
+            {
+                return;
+            }
+            using(StreamWriter fileOutput = new StreamWriter(Path.Combine(resourcesDir + @"\history-page", "index.html"), true))
+            {
+                fileOutput.WriteLine($"<div class=cloud><span class=cloud-icon></span>{ DateTime.Now } { url }</div>");
+            }
         }
 
         public void LoadHomePage()
@@ -350,6 +461,24 @@ namespace WaterSkyWinForms
             radioButtons[1].Checked = true;
         }
 
+        private void CreateDownloadsBtn()
+        {
+            downloadsBtn = new Button();
+            downloadsBtn.Dock = DockStyle.Bottom;
+            downloadsBtn.Height = 50;
+            downloadsBtn.Font = new Font("Helvetica", 18);
+            downloadsBtn.Text = "Open Folder";
+            downloadsBtn.BringToFront();
+            downloadsBtn.Click += DownloadsBtn_Click;
+        }
+
+        private void DownloadsBtn_Click(object sender, EventArgs e)
+        {
+            Process.Start("explorer.exe", "/select, " + downloadHandler.filePath);
+            downloadsTableLayoutPanel.Visible = false;
+            downloadsLbl.Text = "Your file is downloading, please wait...";
+        }
+
         private void AddDownloadsLabel() 
         {
             downloadsLbl.Text = "Your file is downloading, please wait...";
@@ -361,16 +490,32 @@ namespace WaterSkyWinForms
             downloadsLbl.BackColor = Color.Turquoise;
             downloadsLbl.ForeColor = Color.Black;
             downloadsLbl.BringToFront();
-            this.Controls.Add(downloadsLbl);
-            downloadsLbl.Visible = false;
         }
 
-        public void ShowDownloadsLabel()  
+        private void ShowDownloadsPanel()  
         {
-            if(!downloadsLbl.Visible)
+            if(downloadHandler.DownloadCancelled == true)
             {
-                downloadsLbl.Visible = true;
-            }          
+                downloadsTableLayoutPanel.Visible = false;
+                downloadHandler.DownloadCancelled = false;
+                downloadHandler.FileIsDownloading = false;
+                downloadHandler.DownloadComplete = false;
+                downloadsTimer.Stop();
+            }
+            if(downloadHandler.FileIsDownloading == true && downloadHandler.DownloadComplete == false)
+            {
+                downloadsTableLayoutPanel.Visible = true;
+                downloadsBtn.Visible = false;
+            }
+            if(downloadHandler.DownloadComplete == true)
+            {
+                downloadsLbl.Text = "Download complete";
+                downloadsBtn.Visible = true;
+                downloadHandler.DownloadCancelled = false;
+                downloadHandler.FileIsDownloading = false;
+                downloadHandler.DownloadComplete = false;
+                downloadsTimer.Stop();
+            }
         }
 
         private void ButtonTabRemove_Click(object sender, EventArgs e)
@@ -388,7 +533,8 @@ namespace WaterSkyWinForms
 
         private void historyButton_Click(object sender, EventArgs e)
         {
-
+            var selectedTabPage = (ChromiumWebBrowser)BrowserTabs.SelectedTab.Controls[0];
+            selectedTabPage.Load(waterskyHistory);
         }
 
         private void menuButton_Click(object sender, EventArgs e)

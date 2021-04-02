@@ -9,6 +9,7 @@ html, body{
 body {
     background-image: linear-gradient(to bottom right, rgb(59, 180, 228) , white); 
     background-repeat:no-repeat;
+    font-family: Helvetica, Arial, sans-serif;
 }
       
 h1{
