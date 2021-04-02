@@ -138,6 +138,7 @@
     <Content Include="Resources\forward_logo.png" />
     <Content Include="Resources\go_logo.png" />
     <Content Include="Resources\history-page\cloud.png" />
+    <Content Include="Resources\history-page\main.js" />
     <Content Include="Resources\history_logo.png" />
     <Content Include="Resources\home-page\home-index.html" />
     <Content Include="Resources\home-page\home-style.css" />
