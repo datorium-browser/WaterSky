@@ -35,32 +35,38 @@
             // 
             // buttonSettings
             // 
-            this.buttonSettings.Location = new System.Drawing.Point(77, 196);
+            this.buttonSettings.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.buttonSettings.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSettings.Location = new System.Drawing.Point(109, 232);
             this.buttonSettings.Name = "buttonSettings";
-            this.buttonSettings.Size = new System.Drawing.Size(75, 23);
+            this.buttonSettings.Size = new System.Drawing.Size(144, 64);
             this.buttonSettings.TabIndex = 0;
             this.buttonSettings.Text = "Settings";
-            this.buttonSettings.UseVisualStyleBackColor = true;
+            this.buttonSettings.UseVisualStyleBackColor = false;
             this.buttonSettings.Click += new System.EventHandler(this.buttonSettings_Click);
             // 
             // buttonNewSession
             // 
-            this.buttonNewSession.Location = new System.Drawing.Point(77, 253);
+            this.buttonNewSession.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.buttonNewSession.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonNewSession.Location = new System.Drawing.Point(173, 302);
             this.buttonNewSession.Name = "buttonNewSession";
-            this.buttonNewSession.Size = new System.Drawing.Size(75, 50);
+            this.buttonNewSession.Size = new System.Drawing.Size(160, 91);
             this.buttonNewSession.TabIndex = 1;
             this.buttonNewSession.Text = "Start new session";
-            this.buttonNewSession.UseVisualStyleBackColor = true;
+            this.buttonNewSession.UseVisualStyleBackColor = false;
             this.buttonNewSession.Click += new System.EventHandler(this.buttonNewSession_Click);
             // 
             // buttonHome
             // 
-            this.buttonHome.Location = new System.Drawing.Point(183, 196);
+            this.buttonHome.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.buttonHome.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonHome.Location = new System.Drawing.Point(259, 232);
             this.buttonHome.Name = "buttonHome";
-            this.buttonHome.Size = new System.Drawing.Size(75, 23);
+            this.buttonHome.Size = new System.Drawing.Size(138, 64);
             this.buttonHome.TabIndex = 2;
             this.buttonHome.Text = "Home";
-            this.buttonHome.UseVisualStyleBackColor = true;
+            this.buttonHome.UseVisualStyleBackColor = false;
             this.buttonHome.Click += new System.EventHandler(this.buttonHome_Click);
             // 
             // BrowserMenu
