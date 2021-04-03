@@ -577,8 +577,8 @@ namespace WaterSkyWinForms
 
         private void ChangeMenuLocation()
         {
-            menu.Top = this.Top + 70;
-            menu.Left = this.Left + (this.Width - 1460);
+            menu.Top = this.Top + 74;
+            menu.Left = this.Left + (this.Width - 424);
         }
 
         private void toolStripButtonBack_Click(object sender, EventArgs e)
