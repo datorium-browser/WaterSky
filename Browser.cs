@@ -14,6 +14,7 @@ using CefSharp;
 using CefSharp.SchemeHandler;
 using CefSharp.WinForms;
 using ChromiumBrowserWinForms;
+using System.Net.NetworkInformation;
 
 namespace WaterSkyWinForms
 {
@@ -41,8 +42,7 @@ namespace WaterSkyWinForms
         List<RadioButton> radioButtons = new List<RadioButton>();
         //excluded .in domain, because it intefiers with some latvian sites
         string[] domains = { ".com", ".uk", ".de", ".ru", ".org", ".net", /*".in",*/ ".ir", ".br", ".au", ".eu", ".lv", ".lt", ".ee" }; // index: 13
-        
-
+        bool incognitoEnabled = false;
 
         public Browser()
         {
@@ -262,8 +262,13 @@ namespace WaterSkyWinForms
             string qwant = $"https://www.qwant.com/?q= {url}";
             var selectedTabPage = (ChromiumWebBrowser)BrowserTabs.SelectedTab.Controls[0];
 
+            if (!NetworkInterface.GetIsNetworkAvailable())
+            {
+                selectedTabPage.Load(pageNotFound);
+                return;
+            }
 
-            foreach(string dom in domains)
+            foreach (string dom in domains)
             {
                 if (!url.Contains(dom))
                 {
@@ -330,10 +335,18 @@ namespace WaterSkyWinForms
             {
                 return;
             }
-            using(StreamWriter fileOutput = new StreamWriter(Path.Combine(resourcesDir + @"\history-page", "index.html"), true))
+            if(incognitoEnabled == true)
             {
-                fileOutput.WriteLine($"<div class=cloud><span class=cloud-icon></span>{ DateTime.Now } { url }</div>");
+                return;
             }
+            else if(incognitoEnabled == false)
+            {
+                using(StreamWriter fileOutput = new StreamWriter(Path.Combine(resourcesDir + @"\history-page", "index.html"), true))
+                {
+                    fileOutput.WriteLine($"<div class=cloud><span class=cloud-icon></span>{ DateTime.Now } { url }</div>");
+                }
+            }
+
         }
 
         public void LoadHomePage()
@@ -564,8 +577,8 @@ namespace WaterSkyWinForms
 
         private void ChangeMenuLocation()
         {
-            menu.Top = this.Top + 60;
-            menu.Left = this.Left + (this.Width - 605);
+            menu.Top = this.Top + 70;
+            menu.Left = this.Left + (this.Width - 1460);
         }
 
         private void toolStripButtonBack_Click(object sender, EventArgs e)
@@ -740,6 +753,20 @@ namespace WaterSkyWinForms
         private void Browser_Load(object sender, EventArgs e)
         {
             AddressBar.Text = addressbarPlaceholder;
+        }
+
+        private void incognitoButton_Click(object sender, EventArgs e)
+        {
+            if (incognitoEnabled == false)
+            {
+                incognitoEnabled = true;
+                incognitoButton.BackColor = Color.Red;
+            }
+            else
+            {
+                incognitoEnabled = false;
+                incognitoButton.BackColor = Color.Transparent;
+            }
         }
     }
 }

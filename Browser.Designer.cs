@@ -30,18 +30,19 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Browser));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.AddressBar = new System.Windows.Forms.ToolStripTextBox();
+            this.BrowserTabs = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.toolStripButtonBack = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonForward = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonReload = new System.Windows.Forms.ToolStripButton();
             this.ButtonGo = new System.Windows.Forms.ToolStripButton();
-            this.AddressBar = new System.Windows.Forms.ToolStripTextBox();
             this.ButtonAddTab = new System.Windows.Forms.ToolStripButton();
             this.ButtonTabRemove = new System.Windows.Forms.ToolStripButton();
             this.menuButton = new System.Windows.Forms.ToolStripButton();
             this.historyButton = new System.Windows.Forms.ToolStripButton();
-            this.BrowserTabs = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.incognitoButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.BrowserTabs.SuspendLayout();
             this.SuspendLayout();
@@ -59,12 +60,65 @@
             this.ButtonAddTab,
             this.ButtonTabRemove,
             this.menuButton,
-            this.historyButton});
+            this.historyButton,
+            this.incognitoButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(831, 47);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // AddressBar
+            // 
+            this.AddressBar.AutoSize = false;
+            this.AddressBar.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.AddressBar.Margin = new System.Windows.Forms.Padding(0);
+            this.AddressBar.Name = "AddressBar";
+            this.AddressBar.Size = new System.Drawing.Size(301, 47);
+            this.AddressBar.Enter += new System.EventHandler(this.AddressBar_Enter);
+            this.AddressBar.Leave += new System.EventHandler(this.AddressBar_Leave);
+            this.AddressBar.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AddressBar_KeyDown);
+            // 
+            // BrowserTabs
+            // 
+            this.BrowserTabs.AllowDrop = true;
+            this.BrowserTabs.Controls.Add(this.tabPage1);
+            this.BrowserTabs.Controls.Add(this.tabPage2);
+            this.BrowserTabs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BrowserTabs.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.BrowserTabs.Location = new System.Drawing.Point(0, 47);
+            this.BrowserTabs.Margin = new System.Windows.Forms.Padding(2);
+            this.BrowserTabs.Name = "BrowserTabs";
+            this.BrowserTabs.SelectedIndex = 0;
+            this.BrowserTabs.Size = new System.Drawing.Size(831, 499);
+            this.BrowserTabs.TabIndex = 1;
+            this.BrowserTabs.Click += new System.EventHandler(this.BrowserTabs_Click);
+            this.BrowserTabs.DragOver += new System.Windows.Forms.DragEventHandler(this.BrowserTabs_DragOver);
+            this.BrowserTabs.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BrowserTabs_MouseDown);
+            this.BrowserTabs.MouseMove += new System.Windows.Forms.MouseEventHandler(this.BrowserTabs_MouseMove);
+            this.BrowserTabs.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BrowserTabs_MouseUp);
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
+            this.tabPage1.Size = new System.Drawing.Size(823, 473);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(2);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(2);
+            this.tabPage2.Size = new System.Drawing.Size(823, 473);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // toolStripButtonBack
             // 
@@ -107,17 +161,6 @@
             this.ButtonGo.Size = new System.Drawing.Size(44, 44);
             this.ButtonGo.Text = "Go";
             this.ButtonGo.Click += new System.EventHandler(this.ButtonGo_Click);
-            // 
-            // AddressBar
-            // 
-            this.AddressBar.AutoSize = false;
-            this.AddressBar.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.AddressBar.Margin = new System.Windows.Forms.Padding(0);
-            this.AddressBar.Name = "AddressBar";
-            this.AddressBar.Size = new System.Drawing.Size(301, 47);
-            this.AddressBar.Enter += new System.EventHandler(this.AddressBar_Enter);
-            this.AddressBar.Leave += new System.EventHandler(this.AddressBar_Leave);
-            this.AddressBar.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AddressBar_KeyDown);
             // 
             // ButtonAddTab
             // 
@@ -166,46 +209,15 @@
             this.historyButton.Text = "History";
             this.historyButton.Click += new System.EventHandler(this.historyButton_Click);
             // 
-            // BrowserTabs
+            // incognitoButton
             // 
-            this.BrowserTabs.AllowDrop = true;
-            this.BrowserTabs.Controls.Add(this.tabPage1);
-            this.BrowserTabs.Controls.Add(this.tabPage2);
-            this.BrowserTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BrowserTabs.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.BrowserTabs.Location = new System.Drawing.Point(0, 47);
-            this.BrowserTabs.Margin = new System.Windows.Forms.Padding(2);
-            this.BrowserTabs.Name = "BrowserTabs";
-            this.BrowserTabs.SelectedIndex = 0;
-            this.BrowserTabs.Size = new System.Drawing.Size(831, 499);
-            this.BrowserTabs.TabIndex = 1;
-            this.BrowserTabs.Click += new System.EventHandler(this.BrowserTabs_Click);
-            this.BrowserTabs.DragOver += new System.Windows.Forms.DragEventHandler(this.BrowserTabs_DragOver);
-            this.BrowserTabs.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BrowserTabs_MouseDown);
-            this.BrowserTabs.MouseMove += new System.Windows.Forms.MouseEventHandler(this.BrowserTabs_MouseMove);
-            this.BrowserTabs.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BrowserTabs_MouseUp);
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage1.Size = new System.Drawing.Size(823, 473);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(2);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage2.Size = new System.Drawing.Size(823, 473);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.incognitoButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.incognitoButton.Image = global::ChromiumBrowserWinForms.Properties.Resources.incognito_logo;
+            this.incognitoButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.incognitoButton.Name = "incognitoButton";
+            this.incognitoButton.Size = new System.Drawing.Size(44, 44);
+            this.incognitoButton.Text = "Incognito";
+            this.incognitoButton.Click += new System.EventHandler(this.incognitoButton_Click);
             // 
             // Browser
             // 
@@ -244,6 +256,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonForward;
         private System.Windows.Forms.ToolStripButton toolStripButtonReload;
         private System.Windows.Forms.ToolStripButton menuButton;
+        private System.Windows.Forms.ToolStripButton incognitoButton;
     }
 }
 

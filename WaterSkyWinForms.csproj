@@ -146,6 +146,7 @@
     <Content Include="Resources\history-page\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\incognito_logo.png" />
     <Content Include="Resources\menu_button.png" />
     <Content Include="Resources\reload_logo.png" />
     <Content Include="Resources\webpage-timeout\cloud-icon.png" />

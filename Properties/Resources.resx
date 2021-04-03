@@ -121,20 +121,8 @@
   <data name="history_logo2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\history_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="history_logo1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\history_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="history_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\history_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="history_logo4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\history_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="history_logo3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\history_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="menu_button" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\menu_button.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="menu_button1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\menu_button.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -142,7 +130,22 @@
   <data name="Menu_Shape" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\menu_shape.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="history_logo4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\history_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="menu_button2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\menu_button.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="menu_button" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\menu_button.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="history_logo3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\history_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="history_logo1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\history_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="incognito_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\incognito_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
